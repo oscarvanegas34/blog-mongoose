@@ -1,0 +1,29 @@
+{
+  "name": "blog-mongoose",
+  "version": "1.0.0",
+  "description": "web app that lets users view and leave comments on the latest new",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarvanegas34/blog-mongoose.git"
+  },
+  "author": "Oscar Vanegas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oscarvanegas34/blog-mongoose/issues"
+  },
+  "homepage": "https://github.com/oscarvanegas34/blog-mongoose#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "mongoose": "^5.4.20",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {}
+}
