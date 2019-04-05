@@ -1,11 +1,74 @@
-// Grab the news as a json
-$.getJSON("/news", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#news").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
+// On click function to scrape
+
+$("#scrape").click(function() {
+ 
+  $.getJSON("/scraper", function() {
+console.log("its working");
+  });
+  // Grab the news as a json
+  $.getJSON("/news", function(data) {
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the apropos information on the page
+      // https://news.google.com/articles/CAIiEP9n2hT1uzesmjuaECUMJZ4qGQgEKhAIACoHCAow6br7CjDjmPQCMPO60gU?hl=es-419&gl=US&ceid=US%3Aes-419
+      // $("#news").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+      const link = data[i].link.slice(1, data[i].link.length)
+      $("#news").append(`
+        <tr>
+          <th scope="row">${i}</th>
+          <td data-id="${data[i]._id}"><a href="https://news.google.com${link}">${data[i].title}</a></td>
+          <td data-id="${data[i]._id}"><button class="btn btn-outline-success articleBtn" data-id="${data[i]._id}" type="button">Save Articles</button></td>          
+        </tr>`);
+
+      // <tr data-id="${data[i]._id}"><a href="https://news.google.com${link}">${data[i].title}</a></td>
+  
+    }
+  });
+
 });
+
+// // Saving Articles
+// $(document).on("click", ".articleBtn", function() {
+   
+//   var id = $(this).attr( "data-id" )
+//   console.log(id);
+
+//   // Grab the news as a json
+//   $.getJSON(`/news/${id}`, function(data) {
+//     // For each one
+//     for (var i = 0; i < data.length; i++) {
+//       // Display the apropos information on the page
+//       // https://news.google.com/articles/CAIiEP9n2hT1uzesmjuaECUMJZ4qGQgEKhAIACoHCAow6br7CjDjmPQCMPO60gU?hl=es-419&gl=US&ceid=US%3Aes-419
+//       // $("#news").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+//       const link = data[i].link.slice(1, data[i].link.length)
+//       $("#myArticles").append(`
+//         <tr>
+//           <th scope="row">${i}</th>
+//           <td data-id="${data[i]._id}"><a href="https://news.google.com${link}">${data[i].title}</a></td>
+//           <td data-id="${data[i]._id}"><button class="btn btn-outline-success" id="articlesNotes" type="button">Articles Notes</button></td> 
+//           <td data-id="${data[i]._id}"><button class="btn btn-outline-success" id="deleteFromSave" type="button">Delete From Saved</button></td>          
+//         </tr>`);
+
+//       // <tr data-id="${data[i]._id}"><a href="https://news.google.com${link}">${data[i].title}</a></td>
+  
+//     }
+//   });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Whenever someone clicks a p tag
@@ -41,6 +104,11 @@ $(document).on("click", "p", function() {
       }
     });
 });
+
+
+
+
+
 
 // When you click the savecomment button
 $(document).on("click", "#savecomment", function() {

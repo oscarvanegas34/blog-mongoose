@@ -1,58 +1,90 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Scraping With Mongoose</title>
-    <style>
-      body { background-color: #cce6ff }
-      #wrapper {
-        width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 5%;
-      }
-      #news {
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Scraping With Mongoose</title>
+  <style>
+    body {
+      background-color: #cce6ff
+    }
+
+    #wrapper {
+      width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 5%;
+    }
+
+    /* #news {
         display: inline-block;
         overflow: auto;
         width: 100%;
         height: 700px;
-      }
-      #comments {
-        float: right;
-        width: 30%;
-      }
-      textarea, input {
-        display: block;
-        width: 100%;
-        background-color: #FCF5C7;
-      }
-      input {
-        height: 36px;
-        font-size: 24px;
-      }
-      textarea {
-        height: 200px;
-        font-size: 18px;
-      }
-    </style>
-  </head>
-  <body>
+      } */
+    #comments {
+      float: right;
+      width: 30%;
+    }
 
-      <nav class="navbar navbar-light bg-light">
-          <form class="form-inline">
-            <button class="btn btn-outline-success" type="button">Scrape News</button>
-            <button class="btn btn-sm btn-outline-secondary" type="button">Comments</button>
-          </form>
-        </nav>
+    textarea,
+    input {
+      display: block;
+      width: 100%;
+      background-color: #FCF5C7;
+    }
 
-    <div id="wrapper">
+    input {
+      height: 36px;
+      font-size: 24px;
+    }
+
+    textarea {
+      height: 200px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-light bg-light">
+    <form class="form-inline">
+      <button onclick="window.location.href = '/'" class="btn btn-outline-success" type="button">Home</button>
+      <button class="btn btn-outline-success" id="scrape" type="button">Scrape New Articles</button>
+      <button class="btn btn-outline-success" id="goToArticles" type="button">Save Articles</button>
+      <!-- <button class="btn btn-sm btn-outline-secondary" type="button">Save Articles</button> -->
+    </form>
+  </nav>
+
+  <!-- <div id="wrapper">
       <h1 style="text-align: center">Spanish News Scraper</h1>
       <h2 style="text-align:center"><i>Get all the headlines in one place.</i></h2>
       <div id="news"></div>
       <div id="comments"></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="app.js"></script>
-  </body>
+    </div> -->
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Article Name</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="news">
+
+    </tbody>
+  </table>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
 </html>

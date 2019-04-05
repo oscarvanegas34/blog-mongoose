@@ -11,7 +11,7 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = 3500;
+var PORT = 4000;
 
 // Initialize Express
 var app = express();
@@ -32,7 +32,11 @@ mongoose.connect("mongodb://localhost/blogNews", { useNewUrlParser: true });
 // Routes
 
 // A GET route for scraping the google news website
+
+
 app.get("/scraper", function(req, res) {
+  // function(req, res) {
+  console.log("/scraper route")
   // First, we grab the body of the html with axios
   axios.get("https://news.google.com/topics/CAAqLAgKIiZDQkFTRmdvSUwyMHZNRFZxYUdjU0JtVnpMVFF4T1JvQ1ZWTW9BQVAB?hl=es-419&gl=US&ceid=US%3Aes-419").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -52,7 +56,7 @@ app.get("/scraper", function(req, res) {
         .children("a")
         .attr("href");
 
-      // Create a new Article using the `result` object built from scraping
+      // Create a new News using the `result` object built from scraping
       db.News.create(result)
         .then(function(dbNews) {
           // View the added result in the console
@@ -69,7 +73,36 @@ app.get("/scraper", function(req, res) {
   });
 });
 
-// Route for getting all Articles from the db
+
+// //API Route to Post a comment
+// app.post("/api/comment", function(req, res) {
+//   if (req.body.name === "") {
+//     req.body.name = "Unknown Person"
+//   }
+
+//   db.Comments.create({
+//       body: req.body.body,
+//       name: req.body.name})
+//     .then(function(dbComment) {
+      
+//       return db.News.findOneAndUpdate({ _id: req.body.newsid}, { $push: { comments: dbComment._id } }, { new: true });
+//     })
+//     .then(function(dbNews) {
+//       // If the User was updated successfully, send it back to the client
+//       // res.json(dbNews);
+//       res.render("comment", {});
+//     })
+//     .catch(function(err) {
+//       // If an error occurs, send it back to the client
+//       res.json(err);
+//     });
+// });
+
+
+
+
+
+// Route for getting all Articles from the db //////
 app.get("/news", function(req, res) {
   // Grab every document in the Articles collection
   db.News.find({})
@@ -82,6 +115,10 @@ app.get("/news", function(req, res) {
       res.json(err);
     });
 });
+
+
+
+
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/news/:id", function(req, res) {
@@ -99,15 +136,34 @@ app.get("/news/:id", function(req, res) {
     });
 });
 
+
+
+
+// Route for saving/updating an Article's associated Note
+app.post("/news", function(req, res) {
+  // Create a new note and pass the req.body to the entry
+  db.News.create(result)
+        .then(function(dbNews) {
+          // View the added result in the console
+          console.log(dbNews);
+        })
+        .catch(function(err) {
+          // If an error occurred, log it
+          console.log(err);
+        });
+    });
+
+
+
 // Route for saving/updating an Article's associated Note
 app.post("/news/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
-  db.Comments.create(req.body)
-    .then(function(dbComments) {
+  db.News.create(req.body)
+    .then(function(dbNews) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.News.findOneAndUpdate({ _id: req.params.id }, { note: dbComments._id }, { new: true });
+      return db.News.findOneAndUpdate({ _id: req.params.id }, { note: dbNews._id }, { new: true });
     })
     .then(function(dbNews) {
       // If we were able to successfully update an Article, send it back to the client
